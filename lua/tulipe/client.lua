@@ -11,12 +11,20 @@ function Client:new(host, port)
   return o
 end
 
-function Client:report(event)
-  self:send("REPORT:" .. event)
+local function trim(str)
+  return string.gsub(str, "%s+", "")
 end
 
-function Client:send(message)
-  self.socket:send(message .. "\n")
+local function send_command(socket, command)
+  local action = trim(command.action or "")
+  local event = trim(command.event or "")
+  if action == "" then error("command's action is mandatory") end
+  local message = string.format("%s %s", action, event)
+  socket:send(message .. "\n")
+end
+
+function Client:report(event)
+  send_command(self.socket, { action = "REPORT", event = event })
 end
 
 function M.new(host, port)
