@@ -6,6 +6,9 @@ local function start(client)
       callback = function() client:report(event) end
     })
   end
+
+  local dashboard = require("tulipe/dashboard").new(client)
+  require("tulipe/commands").register(dashboard)
 end
 
 function M.setup(opts)
