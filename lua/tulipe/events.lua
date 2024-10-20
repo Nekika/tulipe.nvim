@@ -134,18 +134,7 @@ M.Events = {
 function M.lines(events)
   local lines = {}
   for _, event in ipairs(events) do
-    local type = event.type
-    local datetime = event.datetime
-    local line = string.format(
-      "Event: %s - Datetime: %d-%02d-%02dT%02d:%02d:%02d",
-      type,
-      datetime.year,
-      datetime.month,
-      datetime.day,
-      datetime.hour,
-      datetime.minute,
-      datetime.second
-    )
+    local line = string.format("Event: %s - Datetime: %s", event.type, event.datetime)
     table.insert(lines, line)
   end
   return lines
